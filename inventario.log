@@ -1,0 +1,10 @@
+2025-10-28 20:14:17,717 - Operación: nuevo, Args: ('CPU', 'Rafael Perez', 3)
+2025-10-28 20:14:40,244 - Operación: nuevo, Args: ('teclado', 'Rafael Perez', 3)
+2025-10-28 20:14:48,843 - Operación: eliminar
+2025-10-28 20:14:54,868 - Operación: nuevo, Args: ('teclado', 'Rafael Perez', 3)
+2025-10-28 20:15:06,827 - Operación: modificar, Args: ('teclado', 'Rafael Perez', 3)
+2025-10-28 20:15:13,844 - Operación: nuevo, Args: ('mouse', 'Rafael Perez', 3)
+2025-10-28 20:36:13,277 - Operación: eliminar
+2025-10-28 20:36:16,141 - Operación: eliminar
+2025-10-28 20:36:20,965 - Operación: eliminar
+2025-10-28 20:36:24,237 - Operación: eliminar

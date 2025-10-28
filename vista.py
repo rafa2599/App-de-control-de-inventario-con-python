@@ -91,10 +91,51 @@ class GUI():
         boton2 = Radiobutton (self.ventana,text = 'Contabilidad',variable = var_entero,value = 2,command = lambda:self.abmc.boton(var_entero.get(),),bg = 'Steel Blue', fg = 'black')
         boton2.place(x = 25,y = 450)
 
-        boton3 = Radiobutton ( self.ventana,text = 'Departamento de informática',variable = var_entero,value = 3,command=lambda: self.abmc.boton(var_entero.get()),bg = 'Steel Blue', fg = 'black')
+        boton3 = Radiobutton ( self.ventana,text = 'Informatica',variable = var_entero,value = 3,command=lambda: self.abmc.boton(var_entero.get()),bg = 'Steel Blue', fg = 'black')
         boton3.place(x = 25,y = 500)
 
-        boton4 = Radiobutton (self.ventana,text = 'Secretaría' ,variable = var_entero,value = 4,command = lambda: self.abmc.boton(var_entero.get()),bg = 'Steel Blue', fg = 'black')
+        boton4 = Radiobutton (self.ventana,text = 'Secretaria' ,variable = var_entero,value = 4,command = lambda: self.abmc.boton(var_entero.get()),bg = 'Steel Blue', fg = 'black')
         boton4.place(x = 25,y = 550)
+
+        ############################################ BÚSQUEDA Y FILTROS ###########################################################################
+        
+        titulo_busqueda = Label(self.ventana, text='Buscar en Inventario', background='snow4', foreground='White', font=('Arial', '13', 'bold'))
+        titulo_busqueda.place(x=10, y=600)
+
+        # Entry para el término de búsqueda
+        var_busqueda = StringVar()
+        entry_busqueda = ttk.Entry(self.ventana, textvariable=var_busqueda)
+        entry_busqueda.place(x=10, y=630, width=200, height=25)
+
+        # Combobox para seleccionar el campo de búsqueda
+        var_campo = StringVar(value='componente')  # Valor por defecto
+        combo_campo = ttk.Combobox(self.ventana, textvariable=var_campo, values=['componente', 'usuario', 'departamento'], state='readonly')
+        combo_campo.place(x=220, y=630, width=110, height=25)
+
+         # Botón Buscar
+        boton_buscar = Button(self.ventana, text='Buscar', command=lambda: self.abmc.buscar(tree, var_busqueda.get(), var_campo.get()), bg='Steel Blue', fg='White')
+        boton_buscar.place(x=10, y=660, width=80, height=30)
+
+        # Botón Mostrar Todos (para resetear la vista)
+        boton_mostrar_todos = Button(self.ventana, text='Mostrar Todos', command=lambda: self.cargar_todos(tree), bg='Steel Blue', fg='White')
+        boton_mostrar_todos.place(x=100, y=660, width=100, height=30)
+
+        # Método auxiliar para cargar todos los ítems (agrega esto al final de la clase GUI)
+    def cargar_todos(self, tree):
+        """Carga todos los ítems en el Treeview."""
+        for item in tree.get_children():
+            tree.delete(item)
+        
+        cursor = self.abmc.con.cursor()
+        try:
+            sql = "SELECT id, codigo, componente, usuario, departamento FROM Inventario"
+            cursor.execute(sql)
+            resultados = cursor.fetchall()
+            for row in resultados:
+                tree.insert('', 'end', text=str(row[0]), values=(row[1], row[2], row[3], row[4]))
+        except sqlite3.Error as e:
+            showerror('Error', f'Error al cargar todos: {e}')
+        finally:
+            cursor.close()
 
                         
